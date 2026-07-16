@@ -1,0 +1,108 @@
+<div class="page-card">
+	<div class="page-header">
+		<h2 class="page-title"><i class="pi pi-file-check"></i> Nueva Factura</h2>
+		<a routerLink="/invoice/list">
+			<p-button label="Volver" icon="pi pi-arrow-left" size="small" severity="secondary" />
+		</a>
+	</div>
+
+	<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+		<!-- Header -->
+		<div class="section-title">Cabecera de Factura</div>
+		<div class="form-grid mb-4">
+			<div class="field">
+				<label>Fecha de Emisión *</label>
+				<p-datepicker formControlName="issueDate" [showTime]="true"
+					dateFormat="dd/mm/yy" styleClass="w-full" inputStyleClass="w-full" />
+				@if(f('issueDate')?.invalid && f('issueDate')?.touched) {
+					<small class="errorMessage">La fecha de emisión es requerida.</small>
+				}
+			</div>
+			<div class="field">
+				<label>Cliente *</label>
+				<p-select formControlName="customerId" [options]="customers"
+					placeholder="Seleccionar cliente" styleClass="w-full" />
+				@if(f('customerId')?.invalid && f('customerId')?.touched) {
+					<small class="errorMessage">El cliente es requerido.</small>
+				}
+			</div>
+		</div>
+
+		<p-divider />
+
+		<!-- Details -->
+		<div class="section-header">
+			<span class="section-title">Detalles de Factura</span>
+			<p-button label="Agregar Línea" icon="pi pi-plus" size="small" severity="secondary"
+				type="button" (click)="addDetail()" />
+		</div>
+
+		<div formArrayName="details">
+			@for(detail of detailsArray.controls; track $index; let i = $index) {
+				<div [formGroupName]="i" class="detail-row">
+
+					<div class="detail-row-header">
+						<span class="detail-num">Línea {{i + 1}}</span>
+						@if(detailsArray.length > 1) {
+							<p-button icon="pi pi-times" size="small" [text]="true" severity="danger"
+								type="button" (click)="removeDetail(i)" pTooltip="Quitar línea" />
+						}
+					</div>
+
+					<div class="form-grid">
+						<div class="field">
+							<label>Concepto *</label>
+							<input pInputText formControlName="concept"
+								placeholder="Descripción del servicio o repuesto" class="w-full" />
+							@if(df(i,'concept')?.invalid && df(i,'concept')?.touched) {
+								<small class="errorMessage">El concepto es requerido.</small>
+							}
+						</div>
+
+						<div class="field">
+							<label>Cantidad *</label>
+							<p-inputnumber formControlName="quantity" [useGrouping]="false"
+								[min]="1" styleClass="w-full" inputStyleClass="w-full" />
+						</div>
+
+						<div class="field">
+							<label>Tipo *</label>
+							<p-select formControlName="type" [options]="typeOptions"
+								styleClass="w-full" />
+						</div>
+
+						<div class="field">
+							@if(detailGroup(i).get('type')?.value === 'service') {
+								<label>Servicio *</label>
+								<p-select formControlName="serviceId" [options]="services"
+									placeholder="Seleccionar servicio" styleClass="w-full" />
+							} @else {
+								<label>Repuesto *</label>
+								<p-select formControlName="sparePartId" [options]="spareParts"
+									placeholder="Seleccionar repuesto" styleClass="w-full" />
+							}
+						</div>
+
+						<div class="field field-full">
+							<label>Orden de Trabajo (opcional)</label>
+							<p-select formControlName="workOrderId" [options]="workOrders"
+								placeholder="Vincular a orden de trabajo" [showClear]="true"
+								styleClass="w-full" />
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+
+		<p-divider />
+
+		<div class="form-actions">
+			<p-button type="submit" label="Crear Factura" icon="pi pi-check" [loading]="loading" />
+			<a routerLink="/invoice/list">
+				<p-button type="button" label="Cancelar" icon="pi pi-times" severity="secondary" />
+			</a>
+		</div>
+
+	</form>
+</div>

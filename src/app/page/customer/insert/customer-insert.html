@@ -1,0 +1,65 @@
+<div class="page-card">
+	<div class="page-header">
+		<h2 class="page-title">
+			<i class="pi pi-user-plus"></i>
+			{{isEdit ? 'Editar Cliente' : 'Nuevo Cliente'}}
+		</h2>
+		<a routerLink="/customer/list">
+			<p-button label="Volver" icon="pi pi-arrow-left" size="small" severity="secondary" />
+		</a>
+	</div>
+
+	<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-grid">
+
+		<div class="field">
+			<label>Nombres *</label>
+			<input pInputText formControlName="firstName" placeholder="John" class="w-full" />
+			@if(f('firstName')?.invalid && f('firstName')?.touched) {
+				<small class="errorMessage">El nombre es requerido.</small>
+			}
+		</div>
+
+		<div class="field">
+			<label>Apellidos *</label>
+			<input pInputText formControlName="surName" placeholder="Smith" class="w-full" />
+			@if(f('surName')?.invalid && f('surName')?.touched) {
+				<small class="errorMessage">El apellido es requerido.</small>
+			}
+		</div>
+
+		<div class="field">
+			<label>Número de Documento *</label>
+			<input pInputText formControlName="documentNumber" placeholder="12345678" class="w-full" />
+			@if(f('documentNumber')?.invalid && f('documentNumber')?.touched) {
+				<small class="errorMessage">El número de documento es requerido.</small>
+			}
+		</div>
+
+		<div class="field">
+			<label>Teléfono</label>
+			<input pInputText formControlName="phone" placeholder="999 888 777" class="w-full" />
+		</div>
+
+		<div class="field">
+			<label>Correo Electrónico</label>
+			<input pInputText formControlName="email" placeholder="john@correo.com" class="w-full" />
+			@if(f('email')?.invalid && f('email')?.touched) {
+				<small class="errorMessage">Ingrese un correo electrónico válido.</small>
+			}
+		</div>
+
+		<div class="field field-full">
+			<label>Dirección</label>
+			<input pInputText formControlName="address" placeholder="Calle Principal 123" class="w-full" />
+		</div>
+
+		<div class="field-full form-actions">
+			<p-button type="submit" [label]="isEdit ? 'Actualizar' : 'Guardar'"
+				icon="pi pi-check" [loading]="loading" />
+			<a routerLink="/customer/list">
+				<p-button type="button" label="Cancelar" icon="pi pi-times" severity="secondary" />
+			</a>
+		</div>
+
+	</form>
+</div>

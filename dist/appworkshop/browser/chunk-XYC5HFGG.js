@@ -1,0 +1,1 @@
+import{l as n}from"./chunk-GUBLIEO7.js";function a(o){var r=new t;return r.rootUrl=o,{provide:t,useValue:r}}var t=class o{rootUrl="http://localhost:8080";static \u0275fac=function(e){return new(e||o)};static \u0275prov=n({token:o,factory:o.\u0275fac,providedIn:"root"})};export{a,t as b};

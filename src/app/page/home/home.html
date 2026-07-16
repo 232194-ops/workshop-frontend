@@ -1,0 +1,20 @@
+<div class="home-container">
+	<div class="welcome-banner">
+		<div>
+			<h2>Bienvenido de nuevo, {{user?.firstName}} {{user?.surName}} 👋</h2>
+			<p>Rol: <strong>{{user?.role}}</strong> &nbsp;|&nbsp; Sistema de Gestión de Taller Mecánico</p>
+		</div>
+	</div>
+
+	<div class="cards-grid">
+		@for(card of cards; track card.route) {
+			<a [routerLink]="card.route" class="module-card">
+				<div class="card-icon" [style.background]="card.color">
+					<i class="pi {{card.icon}}"></i>
+				</div>
+				<span class="card-title">{{card.title}}</span>
+				<i class="pi pi-arrow-right card-arrow"></i>
+			</a>
+		}
+	</div>
+</div>

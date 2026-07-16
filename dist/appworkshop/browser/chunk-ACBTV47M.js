@@ -1,0 +1,1 @@
+import{c as r,l as i}from"./chunk-GUBLIEO7.js";var a=class t{miSubject$=new r;data$(){return this.miSubject$.asObservable()}sendData(e){this.miSubject$.next(e)}static \u0275fac=function(n){return new(n||t)};static \u0275prov=i({token:t,factory:t.\u0275fac,providedIn:"root"})};export{a};

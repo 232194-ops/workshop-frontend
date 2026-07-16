@@ -1,0 +1,68 @@
+<div class="page-card">
+	<div class="page-header">
+		<h2 class="page-title"><i class="pi pi-file-check"></i> Facturas</h2>
+		<a routerLink="/invoice/insert">
+			<p-button label="Nueva Factura" icon="pi pi-plus" size="small" />
+		</a>
+	</div>
+
+	<p-table [value]="invoices" [loading]="loading" [paginator]="true" [rows]="10"
+		responsiveLayout="scroll" styleClass="p-datatable-sm p-datatable-striped"
+		[expandedRowKeys]="expandedRows" dataKey="idInvoice">
+
+		<ng-template pTemplate="header">
+			<tr>
+				<th style="width:3rem"></th>
+				<th>Fecha de Emisión</th>
+				<th>Cliente</th>
+				<th>Total</th>
+				<th style="width:100px">Acciones</th>
+			</tr>
+		</ng-template>
+
+		<ng-template pTemplate="body" let-inv let-expanded="expanded">
+			<tr>
+				<td>
+					<p-button [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+						[pRowToggler]="inv" [text]="true" size="small" />
+				</td>
+				<td>{{inv.issueDate | date:'dd/MM/yyyy HH:mm'}}</td>
+				<td>{{inv.customerFullName}}</td>
+				<td><b>S/ {{inv.total | number:'1.2-2'}}</b></td>
+				<td>
+					<p-button icon="pi pi-trash" size="small" [text]="true" severity="danger"
+						pTooltip="Eliminar" (click)="confirmDelete(inv.idInvoice)" />
+				</td>
+			</tr>
+		</ng-template>
+
+		<ng-template pTemplate="rowexpansion" let-inv>
+			<tr>
+				<td colspan="5">
+					<div class="detail-table-wrapper">
+						<p-table [value]="inv.details" styleClass="p-datatable-sm">
+							<ng-template pTemplate="header">
+								<tr>
+									<th>Concepto</th><th>Cant.</th>
+									<th>Precio Unitario</th><th>Subtotal</th>
+								</tr>
+							</ng-template>
+							<ng-template pTemplate="body" let-d>
+								<tr>
+									<td>{{d.concept}}</td>
+									<td>{{d.quantity}}</td>
+									<td>S/ {{d.unitPrice | number:'1.2-2'}}</td>
+									<td>S/ {{d.subtotal | number:'1.2-2'}}</td>
+								</tr>
+							</ng-template>
+						</p-table>
+					</div>
+				</td>
+			</tr>
+		</ng-template>
+
+		<ng-template pTemplate="emptymessage">
+			<tr><td colspan="5" class="text-center p-4">No se encontraron facturas.</td></tr>
+		</ng-template>
+	</p-table>
+</div>

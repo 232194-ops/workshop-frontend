@@ -1,0 +1,26 @@
+/* eslint-disable */
+import { HttpClient, HttpContext, HttpResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
+import { StrictHttpResponse } from '../../strict-http-response';
+import { RequestBuilder } from '../../request-builder';
+
+export interface AuthRegister$Params {
+  body: {
+    firstName: string;
+    surName: string;
+    email: string;
+    password: string;
+    role: string;
+  };
+}
+
+export function authRegister(http: HttpClient, rootUrl: string, params: AuthRegister$Params, context?: HttpContext): Observable<StrictHttpResponse<any>> {
+  const rb = new RequestBuilder(rootUrl, authRegister.PATH, 'post');
+  if (params) { rb.body(params.body, 'application/json'); }
+  return http.request(rb.build({ responseType: 'json', accept: 'application/json', context })).pipe(
+    filter((r: any): r is HttpResponse<any> => r instanceof HttpResponse),
+    map((r: HttpResponse<any>) => r as StrictHttpResponse<any>)
+  );
+}
+authRegister.PATH = '/api/auth/register';

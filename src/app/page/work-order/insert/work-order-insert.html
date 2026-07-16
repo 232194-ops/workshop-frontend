@@ -1,0 +1,39 @@
+<div class="page-card">
+	<div class="page-header">
+		<h2 class="page-title"><i class="pi pi-clipboard"></i> {{isEdit ? 'Editar Orden de Trabajo' : 'Nueva Orden de Trabajo'}}</h2>
+		<a routerLink="/work-order/list"><p-button label="Volver" icon="pi pi-arrow-left" size="small" severity="secondary" /></a>
+	</div>
+	<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-grid">
+		<div class="field">
+			<label>Fecha de Ingreso *</label>
+			<p-datepicker formControlName="entryDate" [showTime]="true" dateFormat="dd/mm/yy" styleClass="w-full" inputStyleClass="w-full" />
+			@if(f('entryDate')?.invalid && f('entryDate')?.touched) { <small class="errorMessage">La fecha de ingreso es requerida.</small> }
+		</div>
+		<div class="field">
+			<label>Estado *</label>
+			<p-select formControlName="status" [options]="statuses" styleClass="w-full" />
+		</div>
+		<div class="field">
+			<label>Vehículo *</label>
+			<p-select formControlName="vehicleId" [options]="vehicles" placeholder="Seleccionar vehículo" styleClass="w-full" />
+			@if(f('vehicleId')?.invalid && f('vehicleId')?.touched) { <small class="errorMessage">El vehículo es requerido.</small> }
+		</div>
+		<div class="field">
+			<label>Mecánico</label>
+			<p-select formControlName="mechanicId" [options]="mechanics" placeholder="Seleccionar mecánico (opcional)" [showClear]="true" styleClass="w-full" />
+		</div>
+		<div class="field field-full">
+			<label>Descripción del Problema *</label>
+			<textarea pTextarea formControlName="problemDescription" rows="3" class="w-full" placeholder="Describa el problema..."></textarea>
+			@if(f('problemDescription')?.invalid && f('problemDescription')?.touched) { <small class="errorMessage">La descripción del problema es requerida.</small> }
+		</div>
+		<div class="field field-full">
+			<label>Diagnóstico</label>
+			<textarea pTextarea formControlName="diagnosis" rows="3" class="w-full" placeholder="Diagnóstico técnico..."></textarea>
+		</div>
+		<div class="field-full form-actions">
+			<p-button type="submit" [label]="isEdit ? 'Actualizar' : 'Guardar'" icon="pi pi-check" [loading]="loading" />
+			<a routerLink="/work-order/list"><p-button type="button" label="Cancelar" icon="pi pi-times" severity="secondary" /></a>
+		</div>
+	</form>
+</div>

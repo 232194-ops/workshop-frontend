@@ -1,0 +1,26 @@
+<div class="page-card">
+	<div class="page-header">
+		<h2 class="page-title"><i class="pi pi-wrench"></i> {{isEdit ? 'Editar Mecánico' : 'Nuevo Mecánico'}}</h2>
+		<a routerLink="/mechanic/list"><p-button label="Volver" icon="pi pi-arrow-left" size="small" severity="secondary" /></a>
+	</div>
+	<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-grid">
+		<div class="field">
+			<label>Nombre *</label>
+			<input pInputText formControlName="firstName" placeholder="Carlos" class="w-full" />
+			@if(f('firstName')?.invalid && f('firstName')?.touched) { <small class="errorMessage">El nombre es requerido.</small> }
+		</div>
+		<div class="field">
+			<label>Especialidad *</label>
+			<input pInputText formControlName="specialty" placeholder="Motor" class="w-full" />
+			@if(f('specialty')?.invalid && f('specialty')?.touched) { <small class="errorMessage">La especialidad es requerida.</small> }
+		</div>
+		<div class="field">
+			<label>Teléfono</label>
+			<input pInputText formControlName="phone" placeholder="987654321" class="w-full" />
+		</div>
+		<div class="field-full form-actions">
+			<p-button type="submit" [label]="isEdit ? 'Actualizar' : 'Guardar'" icon="pi pi-check" [loading]="loading" />
+			<a routerLink="/mechanic/list"><p-button type="button" label="Cancelar" icon="pi pi-times" severity="secondary" /></a>
+		</div>
+	</form>
+</div>

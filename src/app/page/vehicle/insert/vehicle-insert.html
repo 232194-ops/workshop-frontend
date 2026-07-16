@@ -1,0 +1,42 @@
+<div class="page-card">
+	<div class="page-header">
+		<h2 class="page-title"><i class="pi pi-car"></i> {{isEdit ? 'Editar Vehículo' : 'Nuevo Vehículo'}}</h2>
+		<a routerLink="/vehicle/list"><p-button label="Volver" icon="pi pi-arrow-left" size="small" severity="secondary" /></a>
+	</div>
+	<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-grid">
+		<div class="field">
+			<label>Marca *</label>
+			<input pInputText formControlName="brand" placeholder="Toyota" class="w-full" />
+			@if(f('brand')?.invalid && f('brand')?.touched) { <small class="errorMessage">La marca es requerida.</small> }
+		</div>
+		<div class="field">
+			<label>Modelo *</label>
+			<input pInputText formControlName="model" placeholder="Yaris" class="w-full" />
+			@if(f('model')?.invalid && f('model')?.touched) { <small class="errorMessage">El modelo es requerido.</small> }
+		</div>
+		<div class="field">
+			<label>Año *</label>
+			<p-inputnumber formControlName="year" [useGrouping]="false" placeholder="2020" styleClass="w-full" inputStyleClass="w-full" />
+			@if(f('year')?.invalid && f('year')?.touched) { <small class="errorMessage">El año es requerido.</small> }
+		</div>
+		<div class="field">
+			<label>Placa *</label>
+			<input pInputText formControlName="plate" placeholder="ABC-123" class="w-full" />
+			@if(f('plate')?.invalid && f('plate')?.touched) { <small class="errorMessage">La placa es requerida.</small> }
+		</div>
+		<div class="field">
+			<label>Color</label>
+			<input pInputText formControlName="color" placeholder="Rojo" class="w-full" />
+		</div>
+		<div class="field">
+			<label>Cliente *</label>
+			<p-select formControlName="customerId" [options]="customers"
+				placeholder="Seleccionar cliente" styleClass="w-full" />
+			@if(f('customerId')?.invalid && f('customerId')?.touched) { <small class="errorMessage">El cliente es requerido.</small> }
+		</div>
+		<div class="field-full form-actions">
+			<p-button type="submit" [label]="isEdit ? 'Actualizar' : 'Guardar'" icon="pi pi-check" [loading]="loading" />
+			<a routerLink="/vehicle/list"><p-button type="button" label="Cancelar" icon="pi pi-times" severity="secondary" /></a>
+		</div>
+	</form>
+</div>

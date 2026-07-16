@@ -1,0 +1,120 @@
+/* ===== LAYOUT GENERAL ===== */
+.layout-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #f1f5f9;
+}
+
+/* ===== TOPBAR ===== */
+.layout-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #0f172a;
+    color: white;
+    padding: 0 1.5rem;
+    height: 60px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.topbar-left .app-logo {
+    font-size: 1.2rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
+    color: #f8fafc;
+}
+
+/* ===== MENÚ DE NAVEGACIÓN ===== */
+.topbar-menu {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    overflow-x: auto;
+}
+
+.topbar-menu a {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 6px;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 0.82rem;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.topbar-menu a:hover {
+    background-color: #1e293b;
+    color: #f8fafc;
+}
+
+.topbar-menu a.active-menu {
+    background-color: #334155;
+    color: #ffffff;
+    font-weight: 700;
+}
+
+/* ===== PERFIL ===== */
+.topbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    padding: 0.4rem 0.75rem;
+    border-radius: 6px;
+    transition: background-color 0.2s;
+}
+
+.user-profile:hover { background-color: #1e293b; }
+
+.username {
+    font-size: 0.82rem;
+    color: #e2e8f0;
+    font-weight: 500;
+}
+
+/* ===== CUERPO ===== */
+.layout-body {
+    display: flex;
+    flex: 1;
+}
+
+.layout-main {
+    flex: 1;
+    padding: 1.5rem;
+}
+
+.content-wrapper {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+/* ===== TARJETA DE PÁGINA ===== */
+.page-card {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.page-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
