@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TableModule } from 'primeng/table';
@@ -16,10 +16,11 @@ import { OptionMenuService } from '../../../observable/option-menu/option-menu.s
 	styleUrl: './vehicle-list.css'
 })
 export class VehicleList implements OnInit {
-	private api                 = inject(Api);
+	private api = inject(Api);
 	private confirmationService = inject(ConfirmationService);
-	private messageService      = inject(MessageService);
-	private optionMenuService   = inject(OptionMenuService);
+	private messageService = inject(MessageService);
+	private optionMenuService = inject(OptionMenuService);
+	private cdr = inject(ChangeDetectorRef);
 
 	vehicles: any[] = [];
 	loading = true;
@@ -36,7 +37,10 @@ export class VehicleList implements OnInit {
 			this.vehicles = r.data ?? [];
 		} catch {
 			this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudieron cargar los vehículos.' });
-		} finally { this.loading = false; }
+		} finally {
+			this.loading = false;
+			this.cdr.detectChanges();
+		}
 	}
 
 	confirmDelete(id: string, plate: string): void {
@@ -54,6 +58,7 @@ export class VehicleList implements OnInit {
 			this.load();
 		} catch {
 			this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo eliminar el vehículo.' });
+			this.cdr.detectChanges();
 		}
 	}
 }

@@ -3,12 +3,12 @@ import {
   zindexutils
 } from "./chunk-3WXT4SWY.js";
 import {
+  ConnectedOverlayScrollHandler
+} from "./chunk-B4OS73ZC.js";
+import {
   Motion,
   MotionModule
 } from "./chunk-6MHNK4HE.js";
-import {
-  ConnectedOverlayScrollHandler
-} from "./chunk-B4OS73ZC.js";
 import {
   BaseComponent,
   PARENT_INSTANCE
@@ -1283,4 +1283,4 @@ var OverlayModule = class _OverlayModule {
 export {
   Overlay
 };
-//# sourceMappingURL=chunk-VWBMBNMD.js.map
+//# sourceMappingURL=chunk-BP6ZASVD.js.map

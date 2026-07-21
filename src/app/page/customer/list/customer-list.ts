@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TableModule } from 'primeng/table';
@@ -19,10 +19,11 @@ import { OptionMenuService } from '../../../observable/option-menu/option-menu.s
 	styleUrl: './customer-list.css'
 })
 export class CustomerList implements OnInit {
-	private api                 = inject(Api);
+	private api = inject(Api);
 	private confirmationService = inject(ConfirmationService);
-	private messageService      = inject(MessageService);
-	private optionMenuService   = inject(OptionMenuService);
+	private messageService = inject(MessageService);
+	private optionMenuService = inject(OptionMenuService);
+	private cdr = inject(ChangeDetectorRef);
 
 	customers: any[] = [];
 	loading = true;
@@ -41,6 +42,7 @@ export class CustomerList implements OnInit {
 			this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudieron cargar los clientes.' });
 		} finally {
 			this.loading = false;
+			this.cdr.detectChanges();
 		}
 	}
 
@@ -61,6 +63,7 @@ export class CustomerList implements OnInit {
 			this.loadCustomers();
 		} catch {
 			this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo eliminar al cliente.' });
+			this.cdr.detectChanges();
 		}
 	}
 }

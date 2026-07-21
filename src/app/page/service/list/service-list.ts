@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TableModule } from 'primeng/table';
@@ -51,6 +51,7 @@ export class ServiceList implements OnInit {
 	private confirmationService = inject(ConfirmationService);
 	private messageService = inject(MessageService);
 	private optionMenuService = inject(OptionMenuService);
+	private cdr = inject(ChangeDetectorRef);
 	services: any[] = []; loading = true;
 
 	ngOnInit(): void { this.optionMenuService.sendData('servicelist'); this.load(); }
@@ -58,14 +59,16 @@ export class ServiceList implements OnInit {
 		this.loading = true;
 		try { const r: any = await this.api.invoke(serviceGetAll); this.services = r.data ?? []; }
 		catch { this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudieron cargar los servicios.' }); }
-		finally { this.loading = false; }
+		finally { this.loading = false; this.cdr.detectChanges(); }
 	}
 	confirmDelete(id: string, name: string): void {
-		this.confirmationService.confirm({ message: `¿Eliminar servicio <b>${name}</b>?`, header: 'Confirmar Eliminación',
-			icon: 'pi pi-exclamation-triangle', acceptButtonStyleClass: 'p-button-danger', accept: () => this.delete(id) });
+		this.confirmationService.confirm({
+			message: `¿Eliminar servicio <b>${name}</b>?`, header: 'Confirmar Eliminación',
+			icon: 'pi pi-exclamation-triangle', acceptButtonStyleClass: 'p-button-danger', accept: () => this.delete(id)
+		});
 	}
 	async delete(id: string): Promise<void> {
 		try { await this.api.invoke(serviceDelete, { id }); this.messageService.add({ severity: 'success', summary: 'Eliminado', detail: 'Servicio eliminado con éxito.' }); this.load(); }
-		catch { this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo eliminar el servicio.' }); }
+		catch { this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo eliminar el servicio.' }); this.cdr.detectChanges(); }
 	}
 }

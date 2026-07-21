@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TableModule } from 'primeng/table';
@@ -20,6 +20,7 @@ export class InvoiceList implements OnInit {
 	private confirmationService = inject(ConfirmationService);
 	private messageService = inject(MessageService);
 	private optionMenuService = inject(OptionMenuService);
+	private cdr = inject(ChangeDetectorRef);
 
 	invoices: any[] = [];
 	loading = true;
@@ -37,7 +38,7 @@ export class InvoiceList implements OnInit {
 			this.invoices = r.data ?? [];
 		} catch {
 			this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudieron cargar las facturas.' });
-		} finally { this.loading = false; }
+		} finally { this.loading = false; this.cdr.detectChanges(); }
 	}
 
 	confirmDelete(id: string): void {
@@ -57,6 +58,7 @@ export class InvoiceList implements OnInit {
 			this.load();
 		} catch {
 			this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo eliminar la factura.' });
+			this.cdr.detectChanges();
 		}
 	}
 }

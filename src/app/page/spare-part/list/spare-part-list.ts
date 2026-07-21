@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TableModule } from 'primeng/table';
@@ -53,10 +53,11 @@ import { OptionMenuService } from '../../../observable/option-menu/option-menu.s
 	styles: ['.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem}']
 })
 export class SparePartList implements OnInit {
-	private api                 = inject(Api);
+	private api = inject(Api);
 	private confirmationService = inject(ConfirmationService);
-	private messageService      = inject(MessageService);
-	private optionMenuService   = inject(OptionMenuService);
+	private messageService = inject(MessageService);
+	private optionMenuService = inject(OptionMenuService);
+	private cdr = inject(ChangeDetectorRef);
 
 	parts: any[] = [];
 	loading = true;
@@ -73,7 +74,7 @@ export class SparePartList implements OnInit {
 			this.parts = r.data ?? [];
 		} catch {
 			this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudieron cargar los repuestos.' });
-		} finally { this.loading = false; }
+		} finally { this.loading = false; this.cdr.detectChanges(); }
 	}
 
 	confirmDelete(id: string, name: string): void {
@@ -93,6 +94,7 @@ export class SparePartList implements OnInit {
 			this.load();
 		} catch {
 			this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo eliminar el repuesto.' });
+			this.cdr.detectChanges();
 		}
 	}
 }

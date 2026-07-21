@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { TableModule } from 'primeng/table';
@@ -17,10 +17,11 @@ import { OptionMenuService } from '../../../observable/option-menu/option-menu.s
 	styleUrl: './work-order-list.css'
 })
 export class WorkOrderList implements OnInit {
-	private api                 = inject(Api);
+	private api = inject(Api);
 	private confirmationService = inject(ConfirmationService);
-	private messageService      = inject(MessageService);
-	private optionMenuService   = inject(OptionMenuService);
+	private messageService = inject(MessageService);
+	private optionMenuService = inject(OptionMenuService);
+	private cdr = inject(ChangeDetectorRef);
 
 	orders: any[] = [];
 	loading = true;
@@ -45,7 +46,7 @@ export class WorkOrderList implements OnInit {
 		this.loading = true;
 		try { const r: any = await this.api.invoke(workOrderGetAll); this.orders = r.data ?? []; }
 		catch { this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudieron cargar las órdenes de trabajo.' }); }
-		finally { this.loading = false; }
+		finally { this.loading = false; this.cdr.detectChanges(); }
 	}
 
 	confirmDelete(id: string): void {
@@ -61,6 +62,6 @@ export class WorkOrderList implements OnInit {
 			await this.api.invoke(workOrderDelete, { id });
 			this.messageService.add({ severity: 'success', summary: 'Eliminado', detail: 'Orden de trabajo eliminada con éxito.' });
 			this.load();
-		} catch { this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo eliminar la orden de trabajo.' }); }
+		} catch { this.messageService.add({ severity: 'error', summary: 'Error', detail: 'No se pudo eliminar la orden de trabajo.' }); this.cdr.detectChanges(); }
 	}
 }
