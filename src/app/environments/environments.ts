@@ -1,4 +1,4 @@
 export const environment = {
     production: false,
-    urlBase: 'http://localhost:8080'
+    urlBase: 'https://workshop-backend-gvc3.onrender.com'
 };
