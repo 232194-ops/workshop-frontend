@@ -3,17 +3,56 @@
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	gap: 4rem;
+	gap: 5rem;
 	flex-wrap: wrap;
-	background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+	background: linear-gradient(135deg, #090d16 0%, #1e293b 100%);
 	padding: 2rem;
+	position: relative;
+	overflow: hidden;
+}
+
+/* Background details */
+.login-wrapper::before {
+	content: '';
+	position: absolute;
+	width: 300px;
+	height: 300px;
+	background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+	top: -50px;
+	left: -50px;
+	pointer-events: none;
+}
+
+.login-wrapper::after {
+	content: '';
+	position: absolute;
+	width: 400px;
+	height: 400px;
+	background: radial-gradient(circle, rgba(99, 102, 241, 0.12) 0%, transparent 70%);
+	bottom: -100px;
+	right: -100px;
+	pointer-events: none;
+}
+
+@keyframes float {
+	0% {
+		transform: translateY(0px);
+	}
+	50% {
+		transform: translateY(-12px);
+	}
+	100% {
+		transform: translateY(0px);
+	}
 }
 
 .login-image {
-	max-width: 420px;
+	max-width: 460px;
 	width: 100%;
 	height: auto;
 	display: none;
+	animation: float 5s ease-in-out infinite;
+	filter: drop-shadow(0 25px 35px rgba(0, 0, 0, 0.45));
 }
 
 @media (min-width: 992px) {
@@ -23,42 +62,63 @@
 }
 
 .login-card {
-	background: #ffffff;
-	border-radius: 12px;
-	padding: 2.5rem;
+	background: rgba(255, 255, 255, 0.96);
+	backdrop-filter: blur(8px);
+	border: 1px solid rgba(255, 255, 255, 0.6);
+	border-radius: 16px;
+	padding: 3rem 2.5rem;
 	width: 100%;
-	max-width: 420px;
-	box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+	max-width: 440px;
+	box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+	z-index: 10;
+}
+
+.login-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
 }
 
 .login-header {
 	text-align: center;
-	margin-bottom: 2rem;
+	margin-bottom: 2.25rem;
 }
 
 .login-header h1 {
-	font-size: 2rem;
-	font-weight: 800;
+	font-size: 2.2rem;
+	font-weight: 900;
 	color: #0f172a;
-	letter-spacing: 0.1em;
-	margin: 0 0 0.25rem;
+	letter-spacing: 0.05em;
+	margin: 0 0 0.4rem;
+	background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
 }
 
 .login-header p {
 	color: #64748b;
-	font-size: 0.85rem;
+	font-size: 0.9rem;
+	font-weight: 500;
 	margin: 0;
 }
 
 .field {
 	display: flex;
 	flex-direction: column;
-	gap: 0.4rem;
-	margin-bottom: 1.25rem;
+	gap: 0.5rem;
+	margin-bottom: 1.5rem;
 }
 
 .field label {
 	font-size: 0.85rem;
 	font-weight: 600;
-	color: #374151;
+	color: #475569;
+}
+
+.errorMessage {
+	color: #dc2626;
+	font-size: 0.8rem;
+	font-weight: 500;
+	margin-top: 0.25rem;
+	display: block;
 }
